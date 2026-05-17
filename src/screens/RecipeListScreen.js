@@ -9,21 +9,23 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import recipes, { categories } from '../data/recipes';
+import { useRecipes } from '../contexts/RecipeContext';
 
 export default function RecipeListScreen({ navigation }) {
+  const { recipes, categories } = useRecipes();
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const filteredRecipes = useMemo(() => {
     return recipes.filter((recipe) => {
-      const matchesSearch =
-        recipe.name.toLowerCase().includes(search.toLowerCase());
+      const matchesSearch = recipe.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
       const matchesCategory =
         selectedCategory === 'All' || recipe.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [search, selectedCategory]);
+  }, [recipes, search, selectedCategory]);
 
   const renderRecipe = ({ item }) => (
     <TouchableOpacity
@@ -51,8 +53,16 @@ export default function RecipeListScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.greeting}>What's cooking</Text>
-        <Text style={styles.title}>today?</Text>
+        <View>
+          <Text style={styles.greeting}>What's cooking</Text>
+          <Text style={styles.title}>today?</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => navigation.navigate('CreateRecipe')}
+        >
+          <Text style={styles.addButtonText}>＋</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.searchContainer}>
@@ -103,7 +113,7 @@ export default function RecipeListScreen({ navigation }) {
           <View style={styles.emptyState}>
             <Text style={styles.emptyTitle}>No recipes found</Text>
             <Text style={styles.emptySubtitle}>
-              Try a different search or category
+              Try a different search, category, or add a new recipe
             </Text>
           </View>
         }
@@ -121,6 +131,9 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingHorizontal: 24,
     paddingBottom: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   greeting: {
     fontSize: 18,
@@ -130,6 +143,25 @@ const styles = StyleSheet.create({
     fontSize: 34,
     fontWeight: '800',
     color: '#2D2D2D',
+  },
+  addButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#FF6B35',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.12,
+    shadowRadius: 6,
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: '500',
+    lineHeight: 34,
   },
   searchContainer: {
     paddingHorizontal: 24,
@@ -239,5 +271,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#888',
     marginTop: 4,
+    textAlign: 'center',
+    paddingHorizontal: 30,
   },
 });

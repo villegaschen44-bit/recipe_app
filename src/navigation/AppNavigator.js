@@ -8,6 +8,7 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import RecipeListScreen from '../screens/RecipeListScreen';
 import RecipeDetailScreen from '../screens/RecipeDetailScreen';
+import CreateRecipeScreen from '../screens/CreateRecipeScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
@@ -19,6 +20,17 @@ function RecipesStackNavigator() {
   return (
     <RecipesStack.Navigator screenOptions={{ headerShown: false }}>
       <RecipesStack.Screen name="RecipeList" component={RecipeListScreen} />
+      <RecipesStack.Screen
+        name="CreateRecipe"
+        component={CreateRecipeScreen}
+        options={{
+          headerShown: true,
+          headerTitle: '',
+          headerTransparent: true,
+          headerTintColor: '#2D2D2D',
+          headerBackTitle: 'Back',
+        }}
+      />
       <RecipesStack.Screen
         name="RecipeDetail"
         component={RecipeDetailScreen}

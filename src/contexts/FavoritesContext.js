@@ -15,6 +15,10 @@ export function FavoritesProvider({ children }) {
     });
   }, []);
 
+  const removeFavorite = useCallback((recipeId) => {
+    setFavorites((prev) => prev.filter((f) => f.id !== recipeId));
+  }, []);
+
   const isFavorite = useCallback(
     (recipeId) => {
       return favorites.some((f) => f.id === recipeId);
@@ -24,7 +28,7 @@ export function FavoritesProvider({ children }) {
 
   return (
     <FavoritesContext.Provider
-      value={{ favorites, toggleFavorite, isFavorite }}
+      value={{ favorites, toggleFavorite, removeFavorite, isFavorite }}
     >
       {children}
     </FavoritesContext.Provider>

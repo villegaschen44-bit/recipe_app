@@ -11,6 +11,8 @@ This Recipe App is a mobile application built using React Native and Expo Go, in
 * Browse a list of recipes
 * Search recipes by name or category
 * View recipe details (ingredients and instructions)
+* Create new recipes using an in-app form
+* Delete recipes from the recipe details screen
 * User authentication (Login/Register)
 * Save favorite recipes using Firebase
 * Real-time database integration
@@ -34,9 +36,10 @@ This Recipe App is a mobile application built using React Native and Expo Go, in
 recipe-app/
 │── assets/
 │── components/
+│── contexts/       # Auth, favorites, and recipe CRUD state
 │── screens/
 │── services/        # Firebase configuration and API calls
-│── data/            # Optional local fallback data
+│── data/            # Local fallback recipe data
 │── App.js
 │── package.json
 ```
@@ -134,6 +137,8 @@ npx expo start
 
 ## 🧩 Future Improvements
 
+* Add edit recipe feature
+* Save created/deleted recipes permanently with Firebase Firestore
 * Upload recipe images using Firebase Storage
 * Add user profile management
 * Implement ratings and reviews

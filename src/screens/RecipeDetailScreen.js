@@ -1,23 +1,58 @@
-import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import { useFavorites } from '../contexts/FavoritesContext';
+import { useRecipes } from '../contexts/RecipeContext';
 
-export default function RecipeDetailScreen({ route }) {
+export default function RecipeDetailScreen({ route, navigation }) {
   const { recipe } = route.params;
-  const { toggleFavorite, isFavorite } = useFavorites();
+  const { toggleFavorite, removeFavorite, isFavorite } = useFavorites();
+  const { deleteRecipe } = useRecipes();
   const favorited = isFavorite(recipe.id);
+
+  const handleDelete = () => {
+    Alert.alert(
+      'Delete Recipe',
+      `Are you sure you want to delete ${recipe.name}?`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            deleteRecipe(recipe.id);
+            removeFavorite(recipe.id);
+            navigation.goBack();
+          },
+        },
+      ],
+    );
+  };
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Image source={{ uri: recipe.image }} style={styles.image} />
 
-      <TouchableOpacity
-        style={[styles.fab, favorited && styles.fabActive]}
-        onPress={() => toggleFavorite(recipe)}
-      >
-        <Text style={[styles.fabIcon, favorited && styles.fabIconActive]}>
-          {favorited ? '♥' : '♡'}
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.fabGroup}>
+        <TouchableOpacity
+          style={[styles.fab, favorited && styles.fabActive]}
+          onPress={() => toggleFavorite(recipe)}
+        >
+          <Text style={[styles.fabIcon, favorited && styles.fabIconActive]}>
+            {favorited ? '♥' : '♡'}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.fab, styles.deleteFab]} onPress={handleDelete}>
+          <Text style={styles.deleteFabIcon}>🗑</Text>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.content}>
         <Text style={styles.name}>{recipe.name}</Text>
@@ -75,10 +110,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 300,
   },
-  fab: {
+  fabGroup: {
     position: 'absolute',
     top: 260,
     right: 20,
+    flexDirection: 'row',
+    gap: 12,
+  },
+  fab: {
     width: 56,
     height: 56,
     borderRadius: 28,
@@ -94,12 +133,18 @@ const styles = StyleSheet.create({
   fabActive: {
     backgroundColor: '#FF6B35',
   },
+  deleteFab: {
+    backgroundColor: '#fff',
+  },
   fabIcon: {
     fontSize: 26,
     color: '#FF6B35',
   },
   fabIconActive: {
     color: '#fff',
+  },
+  deleteFabIcon: {
+    fontSize: 23,
   },
   content: {
     padding: 24,
