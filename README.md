@@ -154,6 +154,8 @@ Developed the main app UI including Home screen, RecipeCard component, and navig
 
 ## Tusi
 
+Developed app functions such as create and delete
+
 ## Valeza
 
 
