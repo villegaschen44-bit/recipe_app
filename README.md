@@ -141,12 +141,12 @@ npx expo start
 
 ---
 
-#Contribution
+# Contribution
 
-##Villegas
+## Villegas
 
-##Tusi
+## Tusi
 
-##Valeza
+## Valeza
 
 
