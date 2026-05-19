@@ -140,3 +140,11 @@ npx expo start
 * Add offline caching
 
 ---
+
+#Contribution
+
+##Villegas
+
+##Tusi
+
+##Valeza
