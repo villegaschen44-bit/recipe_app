@@ -157,5 +157,5 @@ Developed the main app UI including Home screen, RecipeCard component, and navig
 Developed app functions such as create and delete
 
 ## Valeza
-
+Developed the contexts/ layer to manage user authentication states and sync the user's favorite recipes across the app.
 
