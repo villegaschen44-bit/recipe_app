@@ -150,6 +150,8 @@ npx expo start
 
 ## Villegas
 
+Developed the main app UI including Home screen, RecipeCard component, and navigation flow with tab and stack navigators.
+
 ## Tusi
 
 ## Valeza
